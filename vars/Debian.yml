@@ -1,0 +1,28 @@
+required_packages:
+  - sudo
+  - apache2
+  - mariadb-server
+  - php
+  - libapache2-mod-php
+  - php-mysql
+  - php-fpm
+  - php-gd
+  - ssmtp
+  - mailutils
+  - net-tools
+  - wget
+  - sudo
+  - make
+  - libcrypt-mysql-perl
+  - libyaml-perl
+  - libjson-perl
+  - libavutil-dev
+  - ffmpeg
+  - libvlc-dev
+  - libvlccore-dev
+  - vlc
+  - apt-transport-https
+  - gnupg
+
+apache2_modules:
+  - rewrite
