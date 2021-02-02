@@ -23,6 +23,7 @@ required_packages:
   - vlc
   - apt-transport-https
   - gnupg
+  - linux-cpupower
 
 apache2_modules:
   - rewrite
