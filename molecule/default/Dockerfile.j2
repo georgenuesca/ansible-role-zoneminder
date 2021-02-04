@@ -21,3 +21,5 @@ RUN mkdir /etc/NetworkManager
 RUN mkdir -p /opt/data01
 RUN echo "managed=false" > /etc/NetworkManager/NetworkManager.conf
 RUN echo "# at boot time, one per line. Lines beginning with "#" are ignored. " > /etc/modules
+
+CMD ["init"]

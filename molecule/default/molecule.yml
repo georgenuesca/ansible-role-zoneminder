@@ -10,7 +10,16 @@ lint: |
   flake8
 platforms:
   - name: Debian10
-    image: amd64/debian:buster
+    image: jrei/systemd-debian:10
+    command: /sbin/init
+    privileged: True
+    tmpfs:
+      - /run
+      - /tmp
+    capabilities:
+      - SYS_ADMIN
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
 provisioner:
   name: ansible
   inventory:
