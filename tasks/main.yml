@@ -1,11 +1,18 @@
 ---
 - include_vars: Debian.yml
   when: ansible_os_family == "Debian"
+  tags:
+    - pip
 
 - name: Updating package list
   apt:
     update_cache: yes
   when: ansible_os_family == "Debian"
+
+- name: Add Apt signing key from ZM
+  apt_key:
+    url: https://zmrepo.zoneminder.com/debian/archive-keyring.gpg
+    state: present
 
 - name: Adding zm repo
   apt_repository:
@@ -14,10 +21,17 @@
 
 - name: installing the required packages
   apt:
-    name: "{{ item }}"
+    name: "{{ required_packages }}"
     state: present
-  with_items:
-    - "{{ required_packages }}"
+  tags:
+    - packages
+
+- name: Install pip modules
+  pip:
+    name: "{{ pip_modules }}"
+    executable: /usr/bin/pip3
+  tags:
+    - pip
 
 - name: secure mysql db
   mysql_db:
@@ -25,11 +39,8 @@
     target: mysql_secure_installation.sql
     state: import
     login_user: root
-
-- name: Add Apt signing key from ZM
-  apt_key:
-    url: https://zmrepo.zoneminder.com/debian/archive-keyring.gpg
-    state: present
+  tags:
+    - secure_mysql
 
 - name: Updating package list
   apt:
@@ -59,7 +70,7 @@
     - "{{ apache2_modules }}"
 
 - name: Enabling required apache2 configuration
-  shell: "a2enconf zoneminder;a2enmod rewrite"
+  shell: "a2enconf zoneminder"
   notify: "{{ item }}"
   with_items:
     - "reload apache2"
