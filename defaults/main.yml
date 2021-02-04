@@ -1,2 +1,3 @@
 zoneminder_mysql_user: 
 zoneminder_mysql_password: 
+php_ini_file: /etc/php/7.3/apache2/php.ini
