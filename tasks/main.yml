@@ -87,16 +87,19 @@
     name: www-data
     group: video
 
-- name: delay start of zoneminder
-  pause:
-    minutes: 2
+- name: create zoneminder storage folder
+  file:
+    state: directory
+    path: "{{ zm_data_dir }}"
+    recurse: yes
+    owner: root
+    group: root
+    mode: 0777
 
-- name: start zoneminder
-  service:
-    name: zoneminder
-    state: started
-    enabled: yes
-    
+#- name: delay start of zoneminder
+#  pause:
+#    minutes: 2
+
 - name: Enabling required apache2 modules
   apache2_module:
     state: present
@@ -109,3 +112,9 @@
   notify: "{{ item }}"
   with_items:
     - "reload apache2"
+
+- name: start zoneminder
+  service:
+    name: zoneminder
+    state: started
+    enabled: yes

@@ -1,0 +1,11 @@
+---
+- hosts: 127.0.0.1
+  vars:
+  connection: local
+  tasks:
+    - name: get custom facts
+      shell: "nmcli |grep {{ ansible_default_ipv4.interface }} |grep connected |grep -Po '(?<=to ).*'"
+      register: nmcli_facts
+
+    - name: debug
+      debug: var=nmcli_facts
