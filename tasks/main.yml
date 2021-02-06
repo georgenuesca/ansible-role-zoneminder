@@ -90,11 +90,11 @@
 - name: create zoneminder storage folder
   file:
     state: directory
-    path: "{{ zm_data_dir }}"
+    path: "{{ zm_data_dir }}/events"
     recurse: yes
-    owner: root
-    group: root
-    mode: 0777
+    owner: www-data
+    group: www-data
+    mode: 0775
 
 #- name: delay start of zoneminder
 #  pause:
@@ -112,6 +112,19 @@
   notify: "{{ item }}"
   with_items:
     - "reload apache2"
+
+- name: update zoneminder.service
+  ansible.builtin.lineinfile:
+    path: "{{ zoneminder_service }}"
+    regexp: '#User=www-data'
+    line: 'User=www-data'
+
+- name: update permissions of zm.conf
+  file:
+    path: "{{ zm_conf }}"
+    owner: www-data
+    group: www-data
+    mode: 0775
 
 - name: start zoneminder
   service:
