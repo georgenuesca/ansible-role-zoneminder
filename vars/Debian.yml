@@ -28,9 +28,12 @@ required_packages:
   - python3
   - python3-pip
   - python3-apt
+  - vainfo
 
 apache2_modules:
   - rewrite
+  - cgi
+
 
 pip_modules:
   - pymysql
