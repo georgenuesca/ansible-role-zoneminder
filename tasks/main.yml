@@ -119,6 +119,12 @@
     regexp: '#User=www-data'
     line: 'User=www-data'
 
+- name: update path swap to /dev/shm
+  ansible.builtin.lineinfile:
+    path: "{{ system-paths }}"
+    regexp: 'ZM_PATH_SWAP='
+    line: 'ZM_PATH_SWAP=/dev/shm'
+
 - name: update permissions of zm.conf
   file:
     path: "{{ zm_conf }}"

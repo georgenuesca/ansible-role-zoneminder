@@ -4,3 +4,4 @@ php_ini_file: /etc/php/7.3/apache2/php.ini
 zm_data_dir: /opt/data01/zoneminder
 zoneminder_service: /lib/systemd/system/zoneminder.service
 zm_conf: /etc/zm/zm.conf
+system-paths: /etc/zm/conf.d/01-system-paths.conf
