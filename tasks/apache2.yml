@@ -1,0 +1,17 @@
+---
+#- name: setup www home folders
+- name: enable apache2 modules
+  #a2enmod proxy
+  #a2enmod proxy_http
+  #a2enmod proxy_balancer
+  #a2enmod lbmethod_byrequests
+  
+- name: 000-default.conf with https redirect
+  template:
+    src: "000-default.conf.j2"
+    dest: "/etc/apache2/sites-available/000-default.conf"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: setup redirect conf

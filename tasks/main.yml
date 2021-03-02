@@ -137,3 +137,9 @@
     name: zoneminder
     state: started
     enabled: yes
+
+- name: apache2 tweaks
+  include_tasks: "apache2.yml"
+  tags:
+    - never
+    - apache2
