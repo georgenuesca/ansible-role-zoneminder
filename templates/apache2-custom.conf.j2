@@ -1,0 +1,38 @@
+<VirtualHost *:80>
+    DocumentRoot "/var/www/html/openhab"
+    ServerName oh3.bahay.org
+    ServerAlias oh3
+
+    # Other directives here
+    ProxyPass / http://192.168.0.73:8080/
+    ProxyPassReverse / http://192.168.0.73:8080/
+</VirtualHost>
+
+<VirtualHost *:443>
+    DocumentRoot "/var/www/html/openhab"
+    ServerName oh3.bahay.org
+    ServerAlias oh3
+
+    SSLEngine on
+
+    SSLCertificateFile      /etc/ssl/certs/ssl-cert-snakeoil.pem
+    SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+
+    # Other directives here
+    ProxyPass / http://192.168.0.73:8080/
+    ProxyPassReverse / http://192.168.0.73:8080/
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "/var/www/html/alarm"
+    ServerName alarm.bahay.org
+    ServerAlias alarm
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "/var/www/html/zoneminder"
+    ServerName zm2.bahay.org
+    ServerAlias zm2
+
+    # Other directives here
+</VirtualHost>

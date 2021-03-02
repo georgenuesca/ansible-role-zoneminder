@@ -1,10 +1,40 @@
 ---
-#- name: setup www home folders
+- name: setup www home folders
+  file:
+    state: directory
+    path: "/var/www/html/{{ item }}"
+    recurse: yes
+    owner: root
+    group: root
+    mode: 0775
+  with_items:
+    - zoneminder
+    - openhab
+  tags:
+    - apache2
+
+- name: index.html for zm www home
+  template:
+    src: "zm.index.html.j2"
+    dest: "/var/www/html/zoneminder/index.html"
+    owner: root
+    group: root
+    mode: '0644'
+  tags:
+    - apache2
+
 - name: enable apache2 modules
-  #a2enmod proxy
-  #a2enmod proxy_http
-  #a2enmod proxy_balancer
-  #a2enmod lbmethod_byrequests
+  community.general.apache2_module:
+    state: present
+    name: " {{ item }} "
+  ignore_errors: True
+  with_items:
+    - proxy
+    - proxy_http
+    - proxy_balancer
+    - lbmethod_byrequests
+  tags:
+    - apache2
   
 - name: 000-default.conf with https redirect
   template:
@@ -13,5 +43,20 @@
     owner: root
     group: root
     mode: '0644'
+  tags:
+    - apache2
 
 - name: setup redirect conf
+  template:
+    src: "templates/apache2-custom.conf.j2"
+    dest: "/etc/apache2/sites-available/apache2-custom.conf"
+    owner: root
+    group: root
+    mode: '0644'
+  tags:
+    - apache2
+
+- name: Enable apache2 custom site
+  shell: "a2ensite apache2-custom"
+  tags:
+    - apache2
