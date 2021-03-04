@@ -1,13 +1,3 @@
-<VirtualHost *:80>
-    DocumentRoot "/var/www/html/openhab"
-    ServerName oh3.bahay.org
-    ServerAlias oh3
-
-    # Other directives here
-    ProxyPass / http://192.168.0.73:8080/
-    ProxyPassReverse / http://192.168.0.73:8080/
-</VirtualHost>
-
 <VirtualHost *:443>
     DocumentRoot "/var/www/html/openhab"
     ServerName oh3.bahay.org
@@ -17,6 +7,32 @@
 
     SSLCertificateFile      /etc/ssl/certs/ssl-cert-snakeoil.pem
     SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+
+    # Other directives here
+    ProxyPass / http://192.168.0.73:8080/
+    ProxyPassReverse / http://192.168.0.73:8080/
+</VirtualHost>
+
+<VirtualHost *:443>
+    DocumentRoot "/var/www/html/openhab"
+    ServerName pve.bahay.org
+    ServerAlias pve
+
+    SSLEngine on
+    SSLCertificateFile      /etc/ssl/certs/ssl-cert-snakeoil.pem
+    SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+
+    SSLProxyEngine on
+    SSLProxyCheckPeerName off
+    SSLProxyCheckPeerName off
+    ProxyPass / https://192.168.0.72:8006/
+    ProxyPassReverse / https://192.168.0.73:8006/
+</VirtualHost>
+
+<VirtualHost *:80>
+    DocumentRoot "/var/www/html/openhab"
+    ServerName oh3.bahay.org
+    ServerAlias oh3
 
     # Other directives here
     ProxyPass / http://192.168.0.73:8080/
