@@ -7,5 +7,9 @@ After installation:
 1. Options -> System -> OPT_USE_AUTH
 2. Options -> System -> AUTH_HASH_SECRET
 3. Options -> Storage -> Change Default -> /opt/data01/zoneminder
-3. 
+3.
+
+ash21
+rtsp://admin:@192.168.0.154:554/cam/realmonitor?channel=1&subtype=0
+ 
 </pre>
