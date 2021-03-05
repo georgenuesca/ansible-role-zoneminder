@@ -21,12 +21,26 @@
     SSLEngine on
     SSLCertificateFile      /etc/ssl/certs/ssl-cert-snakeoil.pem
     SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
-
     SSLProxyEngine on
+    SSLProxyVerify none
+    SSLProxyCheckPeerCN off
     SSLProxyCheckPeerName off
-    SSLProxyCheckPeerName off
-    ProxyPass / https://192.168.0.72:8006/
+    SSLProxyCheckPeerExpire off
+
+    RewriteEngine on
+    RewriteCond %{HTTP:Connection} Upgrade [NC]
+    RewriteCond %{HTTP:Upgrade} websocket [NC]
+    RewriteRule /(.*) wss://192.168.0.72:8006/$1  [P,L]
+
+    UseCanonicalPhysicalPort Off
+    UseCanonicalName         Off
+    ProxyRequests off
+    ProxyPreserveHost on
+    ProxyPass        /.wellknown !
+    ProxyPass / https://192.168.0.72:8006/ flushpackets=On connectiontimeout=300 timeout=300
     ProxyPassReverse / https://192.168.0.73:8006/
+    AllowEncodedSlashes NoDecode
+    ProxyTimeout     600
 </VirtualHost>
 
 <VirtualHost *:80>
